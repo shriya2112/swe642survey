@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS Department Survey</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* GMU color scheme */
+        h1 {
+            color: #006633;
+        }
+
+        /* Light gray background for body */
+        body {
+            background-color: #f5f5f5;
+        }
+
+        /* Custom styling for required fields */
+        .required-label::after {
+            content: "*";
+            color: red;
+            margin-left: 5px;
+        }
+
+        /* Default green border for input elements */
+        input[type="text"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], select, textarea, .form-check-input {
+            border: 2px solid #006633; /* GMU Green */
+            transition: border-color 0.3s ease;
+        }
+
+        /* Yellow border for completed fields */
+        .completed {
+            border-color: #FFCC33 !important; /* GMU Yellow */
+        }
+
+        .form-check-input.completed {
+            border: 2px solid #FFCC33;
+        }
+
+        /* Checkbox, radio button styling */
+        .form-check-input {
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">CS Department Survey</h1>
+        <p>We'd love to hear about your experience during your visit. Please fill out the form below:</p>
+
+        <!-- Survey Form -->
+        <form action="/submit_survey" method="post" autocomplete="on" id="surveyForm">
+            <!-- Autofocus on the first field -->
+            <div class="form-group">
+                <label for="username" class="required-label">Full Name</label>
+                <input type="text" class="form-control" id="username" name="username" required autofocus>
+            </div>
+
+            <div class="form-group">
+                <label for="address" class="required-label">Street Address</label>
+                <input type="text" class="form-control" id="address" name="address" required>
+            </div>
+
+            <div class="form-group">
+                <label for="city" class="required-label">City</label>
+                <input type="text" class="form-control" id="city" name="city" required>
+            </div>
+
+            <div class="form-group">
+                <label for="state" class="required-label">State</label>
+                <input type="text" class="form-control" id="state" name="state" required>
+            </div>
+
+            <div class="form-group">
+                <label for="zip" class="required-label">Zip Code</label>
+                <input type="text" class="form-control" id="zip" name="zip" pattern="\d{5}" placeholder="12345" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone" class="required-label">Telephone Number</label>
+                <input type="tel" class="form-control" id="phone" name="phone" placeholder="123-456-7890" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="required-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="url">Website URL (optional)</label>
+                <input type="url" class="form-control" id="url" name="url" placeholder="http://example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="survey_date" class="required-label">Date of Survey</label>
+                <input type="date" class="form-control" id="survey_date" name="survey_date" required>
+            </div>
+
+            <!-- Checkboxes for campus likes -->
+            <div class="form-group">
+                <label class="required-label">What did you like most about the campus?</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="students" name="likes[]" value="students">
+                    <label class="form-check-label" for="students">Students</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="location" name="likes[]" value="location">
+                    <label class="form-check-label" for="location">Location</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="campus" name="likes[]" value="campus">
+                    <label class="form-check-label" for="campus">Campus</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="atmosphere" name="likes[]" value="atmosphere">
+                    <label class="form-check-label" for="atmosphere">Atmosphere</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="dorms" name="likes[]" value="dorms">
+                    <label class="form-check-label" for="dorms">Dorm Rooms</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="sports" name="likes[]" value="sports">
+                    <label class="form-check-label" for="sports">Sports</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="foodcourt" name="likes[]" value="foodcourt">
+                    <label class="form-check-label" for="foodcourt">Food Court</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="faculty" name="likes[]" value="faculty">
+                    <label class="form-check-label" for="faculty">Faculty</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="events" name="likes[]" value="events">
+                    <label class="form-check-label" for="events">Events</label>
+                </div>
+            </div>
+
+            <!-- Radio buttons for interest source -->
+            <div class="form-group">
+                <label class="required-label">How did you hear about us?</label><br>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="friends" name="source" value="friends" required>
+                    <label class="form-check-label" for="friends">Friends</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="tv" name="source" value="television" required>
+                    <label class="form-check-label" for="tv">Television</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="internet" name="source" value="internet" required>
+                    <label class="form-check-label" for="internet">Internet</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="wordofmouth" name="source" value="wordofmouth" required>
+                    <label class="form-check-label" for="wordofmouth">Word of Mouth</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="alumni" name="source" value="alumni" required>
+                    <label class="form-check-label" for="alumni">Alumni</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="relatives" name="source" value="relatives" required>
+                    <label class="form-check-label" for="relatives">Relatives</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="other" name="source" value="other" required>
+                    <label class="form-check-label" for="other">Other</label>
+                </div>
+            </div>
+
+            <!-- Text area for additional comments -->
+            <div class="form-group">
+                <label for="comments">Additional Comments</label>
+                <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
+            </div>
+
+            <!-- Datalist for graduation month -->
+            <div class="form-group">
+                <label for="grad_month">High School Graduation Month</label>
+                <input list="months" class="form-control" id="grad_month" name="grad_month">
+                <datalist id="months">
+                    <option value="January">
+                    <option value="February">
+                    <option value="March">
+                    <option value="April">
+                    <option value="May">
+                    <option value="June">
+                    <option value="July">
+                    <option value="August">
+                    <option value="September">
+                    <option value="October">
+                    <option value="November">
+                    <option value="December">
+                </datalist>
+            </div>
+
+            <!-- Text field for graduation year -->
+            <div class="form-group">
+                <label for="grad_year">High School Graduation Year</label>
+                <input type="text" class="form-control" id="grad_year" name="grad_year" pattern="\d{4}" placeholder="2024" required>
+            </div>
+
+            <!-- Dropdown for recommendation likelihood -->
+            <div class="form-group">
+                <label for="recommendation" class="required-label">Likelihood of recommending this school</label>
+                <select class="form-control" id="recommendation" name="recommendation" required>
+                    <option value="">-- Select --</option>
+                    <option value="very_likely">Very Likely</option>
+                    <option value="likely">Likely</option>
+                    <option value="unlikely">Unlikely</option>
+                </select>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary">Submit Survey</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Script to dynamically update border color -->
+    <script>
+        document.querySelectorAll('input, select, textarea').forEach(element => {
+            element.addEventListener('input', function() {
+                if (this.value.trim() !== "") {
+                    this.classList.add('completed');  // Add yellow border if filled
+                } else {
+                    this.classList.remove('completed');  // Revert to green if empty
+                }
+            });
+        });
+
+        // Handle checkboxes and radio buttons
+        document.querySelectorAll('.form-check-input').forEach(element => {
+            element.addEventListener('change', function() {
+                if (this.checked) {
+                    this.classList.add('completed');  // Add yellow border if selected
+                } else {
+                    this.classList.remove('completed');  // Revert to green if deselected
+                }
+            });
+        });
+    </script>
+</body>
+</html>
